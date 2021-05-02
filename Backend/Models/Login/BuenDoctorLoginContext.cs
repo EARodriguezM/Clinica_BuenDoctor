@@ -17,7 +17,7 @@ namespace BuenDoctorAPI.Models.Login
         {
         }
 
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Login> Logins { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -31,13 +31,13 @@ namespace BuenDoctorAPI.Models.Login
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
-            modelBuilder.Entity<User>(entity =>
+            modelBuilder.Entity<Login>(entity =>
             {
-                entity.ToTable("USER");
+                entity.ToTable("LOGIN");
 
-                entity.Property(e => e.UserId)
+                entity.Property(e => e.LoginId)
                     .HasMaxLength(10)
-                    .HasColumnName("USER_ID");
+                    .HasColumnName("LOGIN_ID");
 
                 entity.Property(e => e.PasswordHash)
                     .HasMaxLength(128)

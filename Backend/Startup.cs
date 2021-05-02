@@ -12,6 +12,13 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
+using Microsoft.EntityFrameworkCore;
+
+using BuenDoctorAPI.Models.Login;
+using BuenDoctorAPI.Models.Data;
+
+
+
 namespace BuenDoctorAPI
 {
     public class Startup
@@ -26,12 +33,20 @@ namespace BuenDoctorAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<BuenDoctorLoginContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("LoginConnection")));
+            services.AddDbContext<BuenDoctorDataContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DataConnection")));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BuenDoctorAPI", Version = "v1" });
             });
+
+            services.AddCors();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +58,10 @@ namespace BuenDoctorAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BuenDoctorAPI v1"));
             }
+
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            app.UseAuthentication();
+
 
             app.UseHttpsRedirection();
 
