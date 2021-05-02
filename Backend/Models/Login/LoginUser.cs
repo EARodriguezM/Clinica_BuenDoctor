@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace BuenDoctorAPI.Models.Login
 {
-    public partial class Login
+    public partial class LoginUser
     {
-        public string LoginId { get; set; }
+        public string LoginUserId { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
         public bool? Status { get; set; }

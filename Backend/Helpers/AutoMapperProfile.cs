@@ -15,9 +15,9 @@ namespace BuenDoctorAPI.Helpers
             //CreateMap<Source, Destination>();
 
             
-            CreateMap<LoginDto, Login>();
+            CreateMap<LoginDto, LoginUser>();
             //CreateMap<RegisterDto, Login>();
-            CreateMap<RegisterUserDto, User>();
+            CreateMap<RegisterUserDto, DataUser>();
         }
         
     }

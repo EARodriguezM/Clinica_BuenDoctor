@@ -5,14 +5,15 @@ using System.Collections.Generic;
 
 namespace BuenDoctorAPI.Models.Data
 {
-    public partial class User
+    public partial class DataUser
     {
-        public User()
+        public DataUser()
         {
             Appointments = new HashSet<Appointment>();
+            RDataUserUserTypes = new HashSet<RDataUserUserType>();
         }
 
-        public string UserId { get; set; }
+        public string DataUserId { get; set; }
         public string FirstName { get; set; }
         public string SecondName { get; set; }
         public string FirstSurname { get; set; }
@@ -25,5 +26,6 @@ namespace BuenDoctorAPI.Models.Data
         public bool? Status { get; set; }
 
         public virtual ICollection<Appointment> Appointments { get; set; }
+        public virtual ICollection<RDataUserUserType> RDataUserUserTypes { get; set; }
     }
 }

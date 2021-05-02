@@ -19,9 +19,9 @@ namespace BuenDoctorAPI.Models.Data
 
         public virtual DbSet<Appointment> Appointments { get; set; }
         public virtual DbSet<AppointmentType> AppointmentTypes { get; set; }
+        public virtual DbSet<DataUser> DataUsers { get; set; }
         public virtual DbSet<Patient> Patients { get; set; }
-        public virtual DbSet<RUserUserType> RUserUserTypes { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<RDataUserUserType> RDataUserUserTypes { get; set; }
         public virtual DbSet<UserType> UserTypes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -46,6 +46,11 @@ namespace BuenDoctorAPI.Models.Data
 
                 entity.Property(e => e.AppointmentTypeId).HasColumnName("APPOINTMENT_TYPE_ID");
 
+                entity.Property(e => e.DataUserId)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .HasColumnName("DATA_USER_ID");
+
                 entity.Property(e => e.Date)
                     .HasColumnType("smalldatetime")
                     .HasColumnName("DATE");
@@ -55,28 +60,23 @@ namespace BuenDoctorAPI.Models.Data
                     .HasMaxLength(10)
                     .HasColumnName("PATIENT_ID");
 
-                entity.Property(e => e.UserId)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .HasColumnName("USER_ID");
-
                 entity.HasOne(d => d.AppointmentType)
                     .WithMany(p => p.Appointments)
                     .HasForeignKey(d => d.AppointmentTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("APPOINTMENT_FK--APPOINTMENT_TYPE");
 
+                entity.HasOne(d => d.DataUser)
+                    .WithMany(p => p.Appointments)
+                    .HasForeignKey(d => d.DataUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("APPOINTMENT_FK--USER");
+
                 entity.HasOne(d => d.Patient)
                     .WithMany(p => p.Appointments)
                     .HasForeignKey(d => d.PatientId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("APPOINTMENT_FK--PATIENT");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Appointments)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("APPOINTMENT_FK--USER");
             });
 
             modelBuilder.Entity<AppointmentType>(entity =>
@@ -92,6 +92,66 @@ namespace BuenDoctorAPI.Models.Data
                     .IsRequired()
                     .HasMaxLength(20)
                     .HasColumnName("DESCRIPTION");
+
+                entity.Property(e => e.Status)
+                    .IsRequired()
+                    .HasColumnName("STATUS")
+                    .HasDefaultValueSql("((1))");
+            });
+
+            modelBuilder.Entity<DataUser>(entity =>
+            {
+                entity.ToTable("DATA_USER");
+
+                entity.HasIndex(e => e.Email, "DATA_USER_EMAIL_UK")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.Phone, "DATA_USER_PHONE_UK")
+                    .IsUnique();
+
+                entity.Property(e => e.DataUserId)
+                    .HasMaxLength(10)
+                    .HasColumnName("DATA_USER_ID");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(50)
+                    .HasColumnName("EMAIL");
+
+                entity.Property(e => e.FirstName)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("FIRST_NAME");
+
+                entity.Property(e => e.FirstSurname)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("FIRST_SURNAME");
+
+                entity.Property(e => e.PasswordHash)
+                    .HasMaxLength(128)
+                    .HasColumnName("PASSWORD_HASH");
+
+                entity.Property(e => e.PasswordSalt)
+                    .HasMaxLength(128)
+                    .HasColumnName("PASSWORD_SALT");
+
+                entity.Property(e => e.Phone)
+                    .IsRequired()
+                    .HasMaxLength(14)
+                    .HasColumnName("PHONE");
+
+                entity.Property(e => e.ProfilePicture)
+                    .HasColumnType("image")
+                    .HasColumnName("PROFILE_PICTURE");
+
+                entity.Property(e => e.SecondName)
+                    .HasMaxLength(50)
+                    .HasColumnName("SECOND_NAME");
+
+                entity.Property(e => e.SecondSurname)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("SECOND_SURNAME");
 
                 entity.Property(e => e.Status)
                     .IsRequired()
@@ -170,95 +230,37 @@ namespace BuenDoctorAPI.Models.Data
                     .HasDefaultValueSql("((1))");
             });
 
-            modelBuilder.Entity<RUserUserType>(entity =>
+            modelBuilder.Entity<RDataUserUserType>(entity =>
             {
-                entity.HasNoKey();
+                entity.ToTable("R-DATA_USER-USER_TYPE");
 
-                entity.ToTable("R-USER-USER_TYPE");
+                entity.Property(e => e.RDataUserUserTypeId)
+                    .HasMaxLength(10)
+                    .HasColumnName("R-DATA_USER-USER_TYPE_ID");
+
+                entity.Property(e => e.DataUserId)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .HasColumnName("DATA_USER_ID");
 
                 entity.Property(e => e.Status)
                     .IsRequired()
                     .HasColumnName("STATUS")
                     .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.UserId)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .HasColumnName("USER_ID");
 
                 entity.Property(e => e.UserTypeId).HasColumnName("USER_TYPE_ID");
 
-                entity.HasOne(d => d.User)
-                    .WithMany()
-                    .HasForeignKey(d => d.UserId)
+                entity.HasOne(d => d.DataUser)
+                    .WithMany(p => p.RDataUserUserTypes)
+                    .HasForeignKey(d => d.DataUserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("R-USER-USER_TYPE_FK--USER");
+                    .HasConstraintName("R-DATA_USER-USER_TYPE_FK--USER");
 
                 entity.HasOne(d => d.UserType)
-                    .WithMany()
+                    .WithMany(p => p.RDataUserUserTypes)
                     .HasForeignKey(d => d.UserTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("R-USER-USER_TYPE_FK--USER_TYPE");
-            });
-
-            modelBuilder.Entity<User>(entity =>
-            {
-                entity.ToTable("USER");
-
-                entity.HasIndex(e => e.Email, "USER_EMAIL_UK")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.Phone, "USER_PHONE_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.UserId)
-                    .HasMaxLength(10)
-                    .HasColumnName("USER_ID");
-
-                entity.Property(e => e.Email)
-                    .HasMaxLength(50)
-                    .HasColumnName("EMAIL");
-
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("FIRST_NAME");
-
-                entity.Property(e => e.FirstSurname)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("FIRST_SURNAME");
-
-                entity.Property(e => e.PasswordHash)
-                    .HasMaxLength(128)
-                    .HasColumnName("PASSWORD_HASH");
-
-                entity.Property(e => e.PasswordSalt)
-                    .HasMaxLength(128)
-                    .HasColumnName("PASSWORD_SALT");
-
-                entity.Property(e => e.Phone)
-                    .IsRequired()
-                    .HasMaxLength(14)
-                    .HasColumnName("PHONE");
-
-                entity.Property(e => e.ProfilePicture)
-                    .HasColumnType("image")
-                    .HasColumnName("PROFILE_PICTURE");
-
-                entity.Property(e => e.SecondName)
-                    .HasMaxLength(50)
-                    .HasColumnName("SECOND_NAME");
-
-                entity.Property(e => e.SecondSurname)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("SECOND_SURNAME");
-
-                entity.Property(e => e.Status)
-                    .IsRequired()
-                    .HasColumnName("STATUS")
-                    .HasDefaultValueSql("((1))");
+                    .HasConstraintName("R-DATA_USER-USER_TYPE_FK--USER_TYPE");
             });
 
             modelBuilder.Entity<UserType>(entity =>
