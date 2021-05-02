@@ -1,9 +1,9 @@
 USE [MASTER]
 GO
---DROP DATABASE [BUEN_DOCTOR-LOGIN]
-CREATE DATABASE [BUEN_DOCTOR-LOGIN]
+DROP DATABASE [BuenDoctorLogin]
+CREATE DATABASE [BuenDoctorLogin]
 GO
-USE [BUEN_DOCTOR-LOGIN]
+USE [BuenDoctorLogin]
 GO
 -------------------------------------------------------------------------------------------
 SET ANSI_NULLS ON
