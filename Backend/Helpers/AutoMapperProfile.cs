@@ -15,9 +15,20 @@ namespace BuenDoctorAPI.Helpers
             //CreateMap<Source, Destination>();
 
             
-            CreateMap<LoginDto, LoginUser>();
+            CreateMap<LoginDto, LoginUser>()
+                .ForMember(dest => dest.LoginUserId, o => o.MapFrom(src => src.UserId))            
+            ;
             //CreateMap<RegisterDto, Login>();
-            CreateMap<RegisterUserDto, DataUser>();
+            CreateMap<RegisterUserDto, DataUser>()
+                .ForMember(dest => dest.DataUserId, o => o.MapFrom(src => src.UserId))
+                .ForMember(dest => dest.FirstName, o => o.MapFrom(src => src.FirstName))
+                .ForMember(dest => dest.SecondName, o => o.MapFrom(src => src.SecondName))
+                .ForMember(dest => dest.FirstSurname, o => o.MapFrom(src => src.FirstSurname))
+                .ForMember(dest => dest.SecondSurname, o => o.MapFrom(src => src.SecondSurname))
+                .ForMember(dest => dest.Email, o => o.MapFrom(src => src.Email))
+                .ForMember(dest => dest.Phone, o => o.MapFrom(src => src.Phone))
+                .ForMember(dest => dest.ProfilePicture, o => o.MapFrom(src => src.ProfilePicture))
+            ;
         }
         
     }

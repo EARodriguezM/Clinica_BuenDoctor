@@ -1,8 +1,8 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 using BuenDoctorAPI.Models.Data;
-using BuenDoctorAPI.Repositories.Login;
 
 namespace BuenDoctorAPI.Repositories.Data
 {

@@ -6,7 +6,6 @@ namespace BuenDoctorAPI.Repositories.Login
     public interface ILoginUserRepository
     {
         Task<LoginUser> Login(string userId, string password);
-        LoginUser CreateLoginEntity(string userId, string password);
         Task<bool> Register(LoginUser login);
         Task<bool> UserExists(string userId);
     }

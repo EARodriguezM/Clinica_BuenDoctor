@@ -37,6 +37,5 @@ namespace BuenDoctorAPI.Dtos.Data
         public byte UserTypeId { get; set; }
         
         public byte[] ProfilePicture { get; set; }
-        public bool? Status { get; set; }
-    }
+    } 
 }

@@ -6,7 +6,7 @@ namespace BuenDoctorAPI.Dtos.Login
     public class LoginDto
     {
         [Required]
-        public string Username { get; set; }
+        public string UserId { get; set; }
         [Required]
         public string Password { get; set; }
 

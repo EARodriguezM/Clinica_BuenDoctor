@@ -17,7 +17,11 @@ using Microsoft.EntityFrameworkCore;
 using BuenDoctorAPI.Models.Login;
 using BuenDoctorAPI.Models.Data;
 
+using BuenDoctorAPI.Repositories.Login;
+using BuenDoctorAPI.Repositories.Data;
 
+using BuenDoctorAPI.BLL.Login;
+using BuenDoctorAPI.BLL.Data;
 
 namespace BuenDoctorAPI
 {
@@ -46,6 +50,12 @@ namespace BuenDoctorAPI
 
             services.AddCors();
 
+            services.AddAutoMapper(typeof(Startup).Assembly);
+
+            services.AddScoped<ILoginUserRepository, LoginUserRepository>();
+            services.AddScoped<DataUserRepository>();
+            services.AddScoped<DataUserBLL>();
+            services.AddScoped<LoginUserBLL>();
 
         }
 
