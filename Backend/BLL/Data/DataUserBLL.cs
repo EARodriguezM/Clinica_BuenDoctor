@@ -41,7 +41,7 @@ namespace BuenDoctorAPI.BLL.Data
             userToCreate.PasswordSalt = loginCreated.PasswordSalt;
 
             var createdUser = await _repository.Register(userToCreate);
-            _LoginBll.Register(loginCreated);
+            await _LoginBll.Register(loginCreated);
 
             return createdUser;
         }
