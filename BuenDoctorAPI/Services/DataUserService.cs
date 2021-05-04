@@ -38,11 +38,11 @@ namespace BuenDoctorAPI.Services
         private readonly IMapper _mapper;
         private readonly AppSettings _appSettings;
 
-        public DataUserService(BuenDoctorDataContext context, IMapper mapper, AppSettings appSettings)
+        public DataUserService(BuenDoctorDataContext context, IMapper mapper, IOptions<AppSettings> appSettings)
         {
             _context = context;
             _mapper = mapper;
-            _appSettings = appSettings;
+            _appSettings = appSettings.Value;
         }
 
         public async Task<AuthenticateResponse> Authenticate(string dataUserId, string password)

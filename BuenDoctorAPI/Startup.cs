@@ -84,6 +84,8 @@ namespace BuenDoctorAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BuenDoctorAPI", Version = "v1" });
             });
 
+
+            services.AddAutoMapper(typeof(Startup).Assembly);
             services.AddScoped<IDataUserService,DataUserService>();
         }
 
@@ -105,7 +107,7 @@ namespace BuenDoctorAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BuenDoctorAPI v1"));
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
