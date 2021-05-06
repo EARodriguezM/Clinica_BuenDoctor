@@ -28,7 +28,7 @@ namespace BuenDoctorAPI.Services
         Task<DataUser> Register(RegisterRequest registerRequest);
         Task<IEnumerable<DataUser>> GetAll();
         Task<DataUser> GetById(string dataUserId);
-        Task Update(UpdateRequest updateRequest, string password = null);
+        Task Update(UpdateRequest updateRequest, string dataUserId, string password = null);
         Task Delete (string dataUserId);
     }
 
@@ -61,6 +61,8 @@ namespace BuenDoctorAPI.Services
         }
         public async Task<DataUser> Register(RegisterRequest registerRequest)
         {
+            registerRequest.Email = registerRequest.Email.ToLower();
+
             var dataUser = _mapper.Map<DataUser>(registerRequest);
             var password = registerRequest.Password;
 
@@ -91,12 +93,12 @@ namespace BuenDoctorAPI.Services
             var userFinded = await _context.DataUsers.FindAsync(dataUserId);
             return userFinded.WithoutPassword();
         }
-        public async Task Update(UpdateRequest updateRequest, string password = null)
+        public async Task Update(UpdateRequest updateRequest, string dataUserId, string password = null)
         {
 
             var dataUser = _mapper.Map<DataUser>(updateRequest);
             
-            var user = _context.DataUsers.Find(dataUser.DataUserId);
+            var user = _context.DataUsers.Find(dataUserId);
 
             if (user == null)
                 throw new AppException("User not found");

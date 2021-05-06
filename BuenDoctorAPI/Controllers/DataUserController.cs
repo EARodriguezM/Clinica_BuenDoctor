@@ -55,19 +55,19 @@ namespace BuenDoctorAPI.Controllers
 
         [Authorize(Roles = "1")]
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var users =  _dataUserService.GetAll();
+            var users =  await _dataUserService.GetAll();
             return Ok(users);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{dataUserId}")]
         public IActionResult GetById(string dataUserId)
         {
             // only allow admins to access other user records
             var currentUserId = (User.Identity.Name).ToString();
             
-            if (dataUserId != currentUserId)
+            if (dataUserId != currentUserId || !User.IsInRole("1"))
                 return Forbid();
 
             var user =  _dataUserService.GetById(dataUserId);
@@ -78,28 +78,20 @@ namespace BuenDoctorAPI.Controllers
             return Ok(user);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{dataUserId}")]
         public IActionResult Update(string dataUserId, [FromBody]UpdateRequest updateRequest)
         {
-            // map model to entity and set id
-            updateRequest.DataUserId = dataUserId;
             
             // only allow admins to access other user records
             var currentUserId = (User.Identity.Name).ToString();
             
-            if (dataUserId != currentUserId)
+            if (dataUserId != currentUserId || !User.IsInRole("1"))
                 return Forbid();
-
-            var user =  _dataUserService.GetById(dataUserId);
-
-            if (user == null)
-                return NotFound();
-
 
             try
             {
                 // update user 
-                _dataUserService.Update(updateRequest, updateRequest.Password);
+                _dataUserService.Update(updateRequest, dataUserId, updateRequest.Password);
                 return Ok();
             }
             catch (AppException ex)
