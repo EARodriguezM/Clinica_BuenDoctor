@@ -15,19 +15,19 @@ namespace BuenDoctorAPI.Models
 
         public string Token { get; set; }
 
-        public AuthenticateResponse(DataUser dataUser, string token)
-        {
-            DataUserId = dataUser.DataUserId;
-            FirstName = dataUser.FirstName;
-            SecondName = dataUser.SecondName;
-            FirstSurname = dataUser.FirstSurname;
-            SecondSurname = dataUser.SecondSurname;
-            Email = dataUser.Email;
-            Phone = dataUser.Phone;
-            ProfilePicture = dataUser.ProfilePicture;
+        // public AuthenticateResponse(DataUser dataUser, string token)
+        // {
+        //     DataUserId = dataUser.DataUserId;
+        //     FirstName = dataUser.FirstName;
+        //     SecondName = dataUser.SecondName;
+        //     FirstSurname = dataUser.FirstSurname;
+        //     SecondSurname = dataUser.SecondSurname;
+        //     Email = dataUser.Email;
+        //     Phone = dataUser.Phone;
+        //     ProfilePicture = dataUser.ProfilePicture;
 
-            Token = token;
-        }
+        //     Token = token;
+        // }
  
     }
 }
