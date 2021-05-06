@@ -55,11 +55,9 @@ namespace BuenDoctorAPI.Services
             if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
                 return null;
 
-            var authenticateResponse = _mapper.Map<AuthenticateResponse>(user.WithoutPassword());
-            authenticateResponse.Token = GenerateToken(user);
+            var authenticateResponse = new AuthenticateResponse(user.WithoutPassword(), GenerateToken(user));
 
             return authenticateResponse;
-
         }
         public async Task<DataUser> Register(RegisterRequest registerRequest)
         {
