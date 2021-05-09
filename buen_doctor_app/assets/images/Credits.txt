@@ -1,0 +1,4 @@
+Credits for https://anchoringhealth.org/case-studies/ (i think) {
+   Hospital.svg
+   Waiting_room.svg
+}
