@@ -13,7 +13,7 @@ namespace BuenDoctorAPI.Helpers
 
             
             CreateMap<AuthenticateRequest, DataUser>()
-                .ForMember(dest => dest.DataUserId, o => o.MapFrom(src => src.DataUserId))
+                .ForMember(dest => dest.Email, o => o.MapFrom(src => src.Email))
             ;
             CreateMap<RegisterRequest, DataUser>()
                 .ForMember(dest => dest.DataUserId, o => o.MapFrom(src => src.DataUserId))
@@ -22,7 +22,7 @@ namespace BuenDoctorAPI.Helpers
                 .ForMember(dest => dest.FirstSurname, o => o.MapFrom(src => src.FirstSurname))
                 .ForMember(dest => dest.SecondSurname, o => o.MapFrom(src => src.SecondSurname))
                 .ForMember(dest => dest.Email, o => o.MapFrom(src => src.Email))
-                .ForMember(dest => dest.Phone, o => o.MapFrom(src => src.Phone))
+                .ForMember(dest => dest.Mobile, o => o.MapFrom(src => src.Phone))
                 .ForMember(dest => dest.ProfilePicture, o => o.MapFrom(src => src.ProfilePicture))
                 .ForMember(dest => dest.UserTypeId, o => o.MapFrom(src => src.UserTypeId))
             ;
@@ -33,7 +33,7 @@ namespace BuenDoctorAPI.Helpers
                 .ForMember(dest => dest.FirstSurname, o => o.MapFrom(src => src.FirstSurname))
                 .ForMember(dest => dest.SecondSurname, o => o.MapFrom(src => src.SecondSurname))
                 .ForMember(dest => dest.Email, o => o.MapFrom(src => src.Email))
-                .ForMember(dest => dest.Phone, o => o.MapFrom(src => src.Phone))
+                .ForMember(dest => dest.Mobile, o => o.MapFrom(src => src.Phone))
                 .ForMember(dest => dest.ProfilePicture, o => o.MapFrom(src => src.ProfilePicture))
                 .ForMember(dest => dest.UserTypeId, o => o.MapFrom(src => src.UserTypeId))
             ;

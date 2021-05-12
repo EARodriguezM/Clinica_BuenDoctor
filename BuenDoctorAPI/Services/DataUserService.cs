@@ -24,7 +24,7 @@ namespace BuenDoctorAPI.Services
 
     public interface IDataUserService
     {
-        Task<AuthenticateResponse> Authenticate(string dataUserId, string password);
+        Task<AuthenticateResponse> Authenticate(string email, string password);
         Task<DataUser> Register(RegisterRequest registerRequest);
         Task<IEnumerable<DataUser>> GetAll();
         Task<DataUser> GetById(string dataUserId);
@@ -45,9 +45,9 @@ namespace BuenDoctorAPI.Services
             _appSettings = appSettings.Value;
         }
 
-        public async Task<AuthenticateResponse> Authenticate(string dataUserId, string password)
+        public async Task<AuthenticateResponse> Authenticate(string email, string password)
         {
-            var user = await _context.DataUsers.SingleOrDefaultAsync(x => x.DataUserId == dataUserId);
+            var user = await _context.DataUsers.SingleOrDefaultAsync(x => x.Email == email);
 
             if (user == null)
                 return null;
@@ -114,13 +114,13 @@ namespace BuenDoctorAPI.Services
             }
 
             // update phone if it has changed
-            if (!string.IsNullOrWhiteSpace(dataUser.Phone) && dataUser.Phone != user.Phone)
+            if (!string.IsNullOrWhiteSpace(dataUser.Mobile) && dataUser.Mobile != user.Mobile)
             {
                 // throw error if the new phone is already taken
-                if (_context.DataUsers.Any(x => x.Phone == dataUser.Phone))
-                    throw new AppException("Username " + dataUser.Phone + " is already taken");
+                if (_context.DataUsers.Any(x => x.Mobile == dataUser.Mobile))
+                    throw new AppException("Username " + dataUser.Mobile + " is already taken");
 
-                user.Phone = dataUser.Phone;
+                user.Mobile = dataUser.Mobile;
             }
 
             if (!string.IsNullOrWhiteSpace(dataUser.UserTypeId.ToString()) && dataUser.UserTypeId != user.UserTypeId)

@@ -10,7 +10,7 @@ namespace BuenDoctorAPI.Models
         public string FirstSurname { get; set; }
         public string SecondSurname { get; set; }
         public string Email { get; set; }
-        public string Phone { get; set; }
+        public string Mobile { get; set; }
         public byte[] ProfilePicture { get; set; }
 
         public string Token { get; set; }
@@ -23,7 +23,7 @@ namespace BuenDoctorAPI.Models
             FirstSurname = dataUser.FirstSurname;
             SecondSurname = dataUser.SecondSurname;
             Email = dataUser.Email;
-            Phone = dataUser.Phone;
+            Mobile = dataUser.Mobile;
             ProfilePicture = dataUser.ProfilePicture;
 
             Token = token;

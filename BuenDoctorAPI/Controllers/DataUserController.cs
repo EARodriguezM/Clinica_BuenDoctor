@@ -30,10 +30,10 @@ namespace BuenDoctorAPI.Controllers
         [HttpPost("authenticate")]
         public async Task<IActionResult> Authenticate([FromBody]AuthenticateRequest authenticateRequest)
         {
-            var user = await _dataUserService.Authenticate(authenticateRequest.DataUserId, authenticateRequest.Password);
+            var user = await _dataUserService.Authenticate(authenticateRequest.Email, authenticateRequest.Password);
 
             if (user == null) 
-                return BadRequest(new {message = "Username or password is incorrect"});
+                return BadRequest(new {message = "Email or password is incorrect"});
 
             return Ok(user);
         }

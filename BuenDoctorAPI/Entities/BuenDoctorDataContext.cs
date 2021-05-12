@@ -105,7 +105,7 @@ namespace BuenDoctorAPI.Entities
                 entity.HasIndex(e => e.Email, "DATA_USER_EMAIL_UK")
                     .IsUnique();
 
-                entity.HasIndex(e => e.Phone, "DATA_USER_PHONE_UK")
+                entity.HasIndex(e => e.Mobile, "DATA_USER_MOBILE_UK")
                     .IsUnique();
 
                 entity.Property(e => e.DataUserId)
@@ -126,6 +126,11 @@ namespace BuenDoctorAPI.Entities
                     .HasMaxLength(50)
                     .HasColumnName("FIRST_SURNAME");
 
+                entity.Property(e => e.Mobile)
+                    .IsRequired()
+                    .HasMaxLength(14)
+                    .HasColumnName("MOBILE");
+
                 entity.Property(e => e.PasswordHash)
                     .HasMaxLength(128)
                     .HasColumnName("PASSWORD_HASH");
@@ -133,11 +138,6 @@ namespace BuenDoctorAPI.Entities
                 entity.Property(e => e.PasswordSalt)
                     .HasMaxLength(128)
                     .HasColumnName("PASSWORD_SALT");
-
-                entity.Property(e => e.Phone)
-                    .IsRequired()
-                    .HasMaxLength(14)
-                    .HasColumnName("PHONE");
 
                 entity.Property(e => e.ProfilePicture)
                     .HasColumnType("image")
