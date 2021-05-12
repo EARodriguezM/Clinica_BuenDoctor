@@ -27,9 +27,11 @@ namespace BuenDoctorAPI.Models
         [StringLength(50, MinimumLength = 8, ErrorMessage = "Password must be at least 8 characters")]
         public string Password { get; set; }
 
+        [Required]
         [StringLength(50, MinimumLength = 8, ErrorMessage = "Email must be at least 8 characters")]
         public string Email { get; set; }
 
+        [Required]
         [StringLength(50, MinimumLength = 10, ErrorMessage = "Phone must be at least 10 characters")]
         public string Phone { get; set; }
 
