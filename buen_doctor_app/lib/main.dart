@@ -1,8 +1,6 @@
 import 'package:buen_doctor_app/routes.dart';
 import 'package:buen_doctor_app/theme.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:buen_doctor_app/constants.dart';
 import 'package:buen_doctor_app/screens/welcome/welcome_screen.dart';
 
 main() {

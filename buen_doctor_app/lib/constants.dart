@@ -28,9 +28,9 @@ const kListSecondaryColor = Color(0xFF369EFF);
 const kListTertiaryColor = Color(0xFF282829);
 
 // Animation
-const kAnimationDuration = Duration(milliseconds: 200);
+const kAnimationDuration = Duration(milliseconds: 250);
 
-const defaultDuration = Duration(milliseconds: 250);
+const defaultDuration = Duration(milliseconds: 300);
 
 // Heading
 final headingStyle = TextStyle(

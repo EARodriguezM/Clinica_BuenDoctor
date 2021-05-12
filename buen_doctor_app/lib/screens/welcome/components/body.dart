@@ -1,4 +1,5 @@
 import 'package:buen_doctor_app/components/default_button.dart';
+import 'package:buen_doctor_app/screens/sign_in/sign_in_screen.dart';
 import 'package:buen_doctor_app/size_config.dart';
 
 import '../../../constants.dart';
@@ -71,9 +72,9 @@ class _BodyState extends State<Body> {
                     ),
                     Spacer(flex: 2),
                     DefaultButton(
-                      text: "Continue",
+                      text: "Continuar",
                       press: () {
-                        //Navigator.pushNamed(context, LogInScreen.routeName);
+                        Navigator.pushNamed(context, SignInScreen.routeName);
                       },
                     ),
                     Spacer(),
