@@ -68,16 +68,13 @@ class _SignInFormState extends State<SignInForm> {
               )
             ],
           ),
+          SizedBox(height: getProportionateScreenHeight(10)),
           FormErrors(errors: errors),
           SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
             text: "Ingresar",
             press: () {
               if (_formKey.currentState!.validate()) {
-                removeError(error: kInvalidEmailError);
-                removeError(error: kEmailNullError);
-                removeError(error: kShortPassError);
-                removeError(error: kPassNullError);
                 _formKey.currentState!.save();
                 // if all are valid then go to success screen
                 KeyboardUtil.hideKeyboard(context);
@@ -93,20 +90,27 @@ class _SignInFormState extends State<SignInForm> {
   buildEmailFormField() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
-      onSaved: (newValue) => email = newValue!,
+      onSaved: (newValue) => email = newValue!.toLowerCase(),
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kEmailNullError);
-        } else if (emailValidatorRegExp.hasMatch(value)) {
+        }
+        // if (emailValidatorRegExp.hasMatch(value + '@buendoctor.com')) {
+        //   removeError(error: kInvalidEmailError);
+        // } else
+        if (emailValidatorRegExp.hasMatch(value)) {
           removeError(error: kInvalidEmailError);
         }
+
         return null;
       },
       validator: (value) {
         if (value!.isEmpty) {
           addError(error: kEmailNullError);
           return "";
-        } else if (!emailValidatorRegExp.hasMatch(value)) {
+        } else if (!emailValidatorRegExp.hasMatch(value)
+            //&& !emailValidatorRegExp.hasMatch(value + '@buendoctor.com')
+            ) {
           addError(error: kInvalidEmailError);
           return "";
         }
