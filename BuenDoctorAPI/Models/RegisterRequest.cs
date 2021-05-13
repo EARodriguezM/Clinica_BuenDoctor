@@ -33,7 +33,7 @@ namespace BuenDoctorAPI.Models
 
         [Required]
         [StringLength(50, MinimumLength = 10, ErrorMessage = "Phone must be at least 10 characters")]
-        public string Phone { get; set; }
+        public string Mobile { get; set; }
 
         [Required]
         public byte UserTypeId { get; set; }
