@@ -28,7 +28,7 @@ namespace BuenDoctorAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public async Task<IActionResult> Authenticate([FromBody]AuthenticateRequest authenticateRequest)
+        public async Task<IActionResult> Authenticate([FromForm]AuthenticateRequest authenticateRequest)
         {
             var user = await _dataUserService.Authenticate(authenticateRequest.Email, authenticateRequest.Password);
 
@@ -40,7 +40,7 @@ namespace BuenDoctorAPI.Controllers
         
         [Authorize(Roles = "1")]
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody]RegisterRequest registerRequest)
+        public async Task<IActionResult> Register([FromForm]RegisterRequest registerRequest)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace BuenDoctorAPI.Controllers
         }
 
         [HttpPut("{dataUserId}")]
-        public IActionResult Update(string dataUserId, [FromBody]UpdateRequest updateRequest)
+        public IActionResult Update(string dataUserId, [FromForm]UpdateRequest updateRequest)
         {
             
             // only allow admins to access other user records
