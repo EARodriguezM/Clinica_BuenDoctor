@@ -1,6 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 
-import 'DataUser.dart';
+import 'data_user.dart';
 
 class UserType {
   late final int userTypeId;

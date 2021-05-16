@@ -1,4 +1,4 @@
-﻿import 'package:buen_doctor_app/models/Appointment.dart';
+﻿import 'package:buen_doctor_app/models/appointment.dart';
 import 'package:flutter/material.dart';
 
 class AppointmentStatus {

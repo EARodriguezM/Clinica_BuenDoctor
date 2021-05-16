@@ -1,8 +1,8 @@
-import 'package:buen_doctor_app/models/Appointment.dart';
+import 'package:buen_doctor_app/models/appointment.dart';
 import 'package:flutter/material.dart';
 
-import 'Appointment.dart';
-import 'UserType.dart';
+import 'appointment.dart';
+import 'user_type.dart';
 
 class DataUser {
   late final String dataUserId;
@@ -16,6 +16,7 @@ class DataUser {
   late final Image? profilePicture;
   late final bool status;
   late final int userTypeId;
+  late final String token;
 
   late final List<Appointment>? appointments = [];
   late final UserType userType;
@@ -50,7 +51,7 @@ class DataUser {
       required this.email,
       required this.mobile,
       this.profilePicture,
-      required token});
+      required this.token});
 
   factory DataUser.authenticateResponseFromJSon(Map<String, dynamic> response) {
     return DataUser.authenticateResponse(

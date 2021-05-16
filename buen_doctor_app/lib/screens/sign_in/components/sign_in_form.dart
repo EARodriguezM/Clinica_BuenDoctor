@@ -3,8 +3,13 @@ import 'package:buen_doctor_app/components/form_errors.dart';
 import 'package:buen_doctor_app/components/surfix_icon.dart';
 import 'package:buen_doctor_app/constants.dart';
 import 'package:buen_doctor_app/helpers/keyboard.dart';
+import 'package:buen_doctor_app/models/data_user.dart';
+import 'package:buen_doctor_app/providers/InAsyncCall.dart';
+import 'package:buen_doctor_app/screens/sign_in_state/sign_in_state_screen.dart';
+import 'package:buen_doctor_app/services/data_user_service.dart';
 import 'package:buen_doctor_app/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignInForm extends StatefulWidget {
   @override
@@ -76,15 +81,36 @@ class _SignInFormState extends State<SignInForm> {
             press: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                // if all are valid then go to success screen
                 KeyboardUtil.hideKeyboard(context);
-                //Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+                signIn(context);
               }
             },
           ),
         ],
       ),
     );
+  }
+
+  signIn(BuildContext context) async {
+    context.read<InAsyncCall>().initAsyncCall();
+    DataUser authenticationRequest = new DataUser.authenticateRequest(email: email, password: password);
+    DataUserService dataUserService = new DataUserService();
+
+    try {
+      await dataUserService.authentication(authenticationRequest).then((authenticationResponse) => {
+            context.read<InAsyncCall>().finalizeAsynCall(),
+            if (authenticationResponse.runtimeType == DataUser)
+              {
+                if (authenticationResponse.token.isNotEmpty)
+                  {Navigator.pushNamed(context, SignInStateScreen.routeName)}
+                else
+                  {Navigator.pushNamed(context, SignInStateScreen.routeName)}
+              }
+          });
+    } catch (e) {
+      context.read<InAsyncCall>().finalizeAsynCall();
+      print(e);
+    }
   }
 
   buildEmailFormField() {

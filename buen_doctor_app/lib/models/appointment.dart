@@ -1,8 +1,8 @@
-import 'package:buen_doctor_app/models/DataUser.dart';
+import 'package:buen_doctor_app/models/data_user.dart';
 import 'package:flutter/material.dart';
 
-import 'AppointmentStatus.dart';
-import 'Patient.dart';
+import 'appointment_status.dart';
+import 'patient.dart';
 
 class Appointment {
   late final String appointmentId;

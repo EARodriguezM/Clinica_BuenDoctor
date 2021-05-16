@@ -1,6 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 
-import 'Appointment.dart';
+import 'appointment.dart';
 
 class Patient {
   late final String patientId;
